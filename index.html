@@ -1,413 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Jivithesh-Portfolio</title>
+  <meta name="description" content="Portfolio of Jivithesh A S — neon purple theme with animations.">
   <style>
-    /* Global Styles */
-    body {
+    /* -------------------------
+       THEME + RESET
+       ------------------------- */
+    :root{
+      --bg-0: #07010a;
+      --bg-1: #10021a;
+      --muted: #9BA8AB;
+      --soft: #CCD0CF;
+      --accent: #8c4bff;
+      --accent-2: #6ef0ff;
+      --glass: rgba(255,255,255,0.03);
+      --card-shadow: 0 10px 40px rgba(8,4,25,0.7);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #101010; /* Darkest Navy for background */
-      color: #9BA8AB; /* Light Gray for paragraph text */
-      line-height: 1.6;
-      scroll-behavior: smooth;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(140,75,255,0.06), transparent 6%),
+        radial-gradient(700px 350px at 90% 90%, rgba(110,240,255,0.03), transparent 6%),
+        linear-gradient(180deg,var(--bg-0),var(--bg-1));
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      scroll-behavior:smooth;
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    img{display:block;max-width:100%}
+
+    /* smooth micro transitions globally */
+    *{transition: all 240ms cubic-bezier(.2,.9,.2,1);}
+
+    /* -------------------------
+       BACKGROUND PARTICLE CANVAS
+       ------------------------- */
+    canvas#particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.9;
     }
 
-    /* General transition for interactive elements */
-    * {
-      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    /* -------------------------
+       HEADER
+       ------------------------- */
+    header{
+      position:relative;
+      z-index:3;
+      padding:3rem 1rem;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+    }
+    .header-content{
+      display:flex;align-items:center;justify-content:center;gap:2.5rem;max-width:1200px;margin:auto;flex-wrap:wrap;
+      position:relative; z-index:2;
+    }
+    .profile-photo{
+      width:150px;height:150px;border-radius:50%;overflow:hidden;
+      border:3px solid rgba(140,75,255,0.25);
+      box-shadow: 0 10px 40px rgba(140,75,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      transform-style:preserve-3d;
+    }
+    .profile-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+
+    .header-text{text-align:left; z-index:2;}
+    header h1{ margin:0; font-size:2.8rem; color:var(--soft); letter-spacing:1px; text-shadow: 0 8px 30px rgba(140,75,255,0.07); }
+    header p{ font-size:1.1rem; margin-top:0.5rem; color:var(--muted); max-width:680px; }
+
+    /* animated neon underline for name */
+    .name-glow {
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(140,75,255,0.13), rgba(110,240,255,0.05));
+      box-shadow: 0 10px 40px rgba(140,75,255,0.08);
+      color:#ffffff; font-weight:700;
     }
 
-    /* Page Load Animation */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* profile hover tilt */
+    .profile-photo:hover{ transform: translateY(-6px) rotateX(6deg) scale(1.02); box-shadow: 0 30px 80px rgba(140,75,255,0.15); }
+
+    /* -------------------------
+       NAV
+       ------------------------- */
+    nav{
+      z-index:3; position:sticky; top:14px; margin:0 auto 20px; max-width:1200px;
+      display:flex; gap:12px; justify-content:center; padding:10px; border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(140,75,255,0.06);
+      box-shadow: 0 12px 40px rgba(8,4,25,0.6);
+      backdrop-filter: blur(6px);
+      position:relative; z-index:2;
+    }
+    nav a{
+      color:var(--muted); text-decoration:none; padding:8px 14px; border-radius:8px; font-weight:700;
+    }
+    nav a:hover{
+      color:#fff; background: linear-gradient(90deg,var(--accent), var(--accent-2)); transform:translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(140,75,255,0.14);
     }
 
-    .animate-on-load {
-      opacity: 0; /* Start hidden */
-      animation: fadeInUp 0.8s ease-out forwards;
+    /* -------------------------
+       SECTIONS
+       ------------------------- */
+    main { position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:0 1rem 4rem; }
+    section{ padding:3rem 0; position:relative; }
+    h2{
+      color:var(--soft); margin:0 0 1.2rem 0; font-size:1.6rem; display:flex;align-items:center;gap:12px;
+      border-bottom:2px solid rgba(140,75,255,0.06); padding-bottom:10px;
+    }
+    h2 .dot{ width:12px;height:12px;border-radius:50%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); box-shadow: 0 8px 30px rgba(140,75,255,0.12); }
+
+    /* -------------------------
+       PROJECTS GRID
+       ------------------------- */
+    .cert-cards{ display:grid; gap:22px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+    .project-link{ text-decoration:none; color:inherit; display:block; }
+    .project-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008));
+      border:1px solid rgba(140,75,255,0.04); border-radius:12px; overflow:hidden;
+      box-shadow: var(--card-shadow);
+      transform-origin:center center;
+      transition: transform 350ms cubic-bezier(.2,.9,.2,1), box-shadow 350ms;
+      position:relative;
+    }
+    .project-card:hover{ transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 100px rgba(8,4,25,0.75); }
+    .project-image{ width:100%; height:180px; object-fit:cover; display:block; transition: transform 520ms cubic-bezier(.2,.9,.2,1); }
+    .project-card:hover .project-image{ transform: scale(1.08) rotate(-1deg); filter: saturate(1.05); }
+
+    .project-content{ padding:1rem 1.2rem; display:flex;flex-direction:column; gap:10px; }
+    .project-content h4{ margin:0; color:var(--soft); font-size:1.1rem; }
+    .project-content p{ margin:0; color:var(--muted); font-size:0.95rem; line-height:1.5; }
+    .project-tech{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .tech-tag{
+      padding:6px 10px; border-radius:999px; font-size:0.78rem; font-weight:700;
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(140,75,255,0.05); color:var(--muted);
     }
 
-    header {
-      padding: 3rem 1rem;
-      background: #11212D;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    /* -------------------------
+       CERTIFICATIONS (kept same content & preview)
+       ------------------------- */
+    .cert-group{ margin-bottom:2.5rem; }
+    .card{
+      background:#11212D; border-radius:8px; display:flex; border:1px solid rgba(74, 92, 106, 0.12);
+      box-shadow: 0 10px 36px rgba(2,0,8,0.6); position:relative; overflow:hidden;
+      transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms;
     }
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      max-width: 1200px;
-      margin: auto;
-      flex-wrap: wrap;
+    .card:hover{ transform: translateY(-10px); box-shadow: 0 30px 100px rgba(12,6,30,0.8); border-color: rgba(140,75,255,0.14); }
+    .cert-card-content{ padding:1.4rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; width:100%; }
+    .card-info h4{ margin:0; color:var(--soft); font-size:1.05rem; }
+    .card-info p{ margin:5px 0; color:var(--muted); font-size:0.9rem; }
+    .card-info a{ color:var(--accent); font-weight:700; text-decoration:none; }
+    .card-info a:hover{ color:var(--accent-2); transform:translateX(6px); text-decoration:underline; }
+    .cert-image{ max-width:120px; border-radius:8px; cursor:pointer; border:1px solid rgba(255,255,255,0.03); box-shadow: 0 8px 30px rgba(92,39,255,0.04); }
+    .cert-image:hover{ transform:scale(1.06); box-shadow: 0 20px 60px rgba(140,75,255,0.12); }
+
+    /* -------------------------
+       MODAL
+       ------------------------- */
+    .modal{ display:none; position:fixed; inset:0; background: rgba(6, 20, 27, 0.92); z-index:9999; align-items:center; justify-content:center; padding:20px; }
+    .modal.open{ display:flex; }
+    .modal-content{ width:80%; max-width:900px; border-radius:12px; box-shadow: 0 36px 100px rgba(20,6,40,0.8); transform-origin:center; overflow:hidden; }
+    .modal img{ width:100%; height:auto; display:block; }
+    .close{ position:absolute; top:18px; right:28px; font-size:36px; color:var(--accent); cursor:pointer; }
+
+    /* -------------------------
+       REVEALS + TILT
+       ------------------------- */
+    .reveal{ opacity:0; transform: translateY(26px) scale(.995); transition: all 700ms cubic-bezier(.2,.9,.2,1); will-change:transform,opacity; }
+    .reveal.show{ opacity:1; transform: translateY(0) scale(1); }
+
+    .tilt{ transform-style:preserve-3d; will-change:transform; }
+
+    /* -------------------------
+       FOOTER
+       ------------------------- */
+    footer{ margin-top:3rem; padding:1.5rem 1rem; text-align:center; color:var(--muted); font-size:0.9rem; z-index:2; }
+
+    /* -------------------------
+       RESPONSIVE
+       ------------------------- */
+    @media (max-width:768px){
+      .header-content{ gap:1rem; padding:0 12px; }
+      .profile-photo{ width:110px;height:110px; }
+      nav{ margin:0 12px; padding:8px; }
+      .cert-cards{ grid-template-columns: 1fr; }
+      .card{ flex-direction:column; align-items:flex-start; }
+      .cert-image{ width:90%; height:auto; }
     }
 
-    .profile-photo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 3px solid #3b8b41;
-      object-fit: cover;
-      box-shadow: 0 0 10px rgba(74, 92, 106, 0.5);
-      animation: pulseBorder 2s infinite alternate;
-    }
-
-    @keyframes pulseBorder {
-      from { border-color: #427a4c; box-shadow: 0 0 10px rgba(74, 92, 106, 0.5); }
-      to { border-color: #9BA8AB; box-shadow: 0 0 20px rgba(155, 168, 171, 0.7); }
-    }
-
-    .header-text { text-align: left; }
-    header h1 {
-      margin: 0;
-      font-size: 2.8rem;
-      color: #CCD0CF;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    }
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-      color: #9BA8AB;
-      max-width: 600px;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      background: #11212D;
-      padding: 0.8rem;
-      border-top: 1px solid #254531;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav a {
-      color: #4A5C6A;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-    }
-
-    nav a:hover {
-      color: #CCD0CF;
-      background-color: #253745;
-      transform: translateY(-2px);
-    }
-
-    section {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    h2 {
-      color: #CCD0CF;
-      border-bottom: 2px solid #253745;
-      padding-bottom: 0.5rem;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-    
-    h2::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 0%;
-      height: 2px;
-      background-color: #4A5C6A;
-      transition: width 0.4s ease-out;
-    }
-
-    h2:hover::after { width: 100%; }
-
-    .cert-group, .project-group {
-      margin-bottom: 3rem;
-    }
-
-    h3 {
-      color: #4A5C6A;
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-      font-size: 1.8rem;
-      border-left: 4px solid #4A5C6A;
-      padding-left: 1rem;
-    }
-
-    .cert-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: #11212D;
-      border-radius: 8px;
-      display: flex;
-      border: 1px solid rgba(74, 92, 106, 0.2);
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: hidden; /* Ensures child elements conform to border-radius */
-    }
-
-    .card:hover {
-      transform: translateY(-7px) scale(1.05);
-      box-shadow: 0px 12px 28px rgba(0,0,0,0.7);
-      border-color: #4A5C6A;
-      z-index: 10;
-    }
-    
-    /* Styles for Certification Cards */
-    .cert-card-content {
-      padding: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      width: 100%;
-    }
-
-    .card-info { flex: 2; }
-    .card-info h4 {
-      margin: 0;
-      color: #CCD0CF;
-      font-size: 1.1rem;
-    }
-    .card-info p {
-      margin: 5px 0;
-      font-size: 0.9rem;
-    }
-    .card-info a {
-      color: #4A5C6A;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: bold;
-      display: inline-block;
-    }
-    .card-info a:hover {
-      text-decoration: underline;
-      color: #CCD0CF;
-      transform: translateX(5px);
-    }
-    .card img.cert-image {
-      max-width: 120px;
-      border-radius: 8px;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-    .card img.cert-image:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px rgba(74, 92, 106, 0.7);
-    }
-
-    /* --- NEW PROJECT CARD STYLES --- */
-    .project-link {
-      text-decoration: none;
-      color: inherit;
-      display: block; /* Makes the link fill the grid area */
-    }
-    .project-card {
-      flex-direction: column;
-      justify-content: space-between; /* Pushes tech tags to the bottom */
-    }
-    .project-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .project-content {
-      padding: 1.5rem;
-      flex-grow: 1; /* Allows content to fill available space */
-      display: flex;
-      flex-direction: column;
-    }
-    .project-content h4 {
-      margin: 0 0 0.5rem 0;
-      color: #CCD0CF;
-      font-size: 1.2rem;
-    }
-    .project-content p {
-      margin: 0 0 1rem 0;
-      font-size: 0.95rem;
-      flex-grow: 1; /* Pushes tags down */
-    }
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .tech-tag {
-      background-color: #253745;
-      padding: 0.25rem 0.75rem;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #9BA8AB;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #06141B;
-      margin-top: 3rem;
-      color: #9BA8AB;
-      font-size: 0.9rem;
-      border-top: 1px solid #253745;
-    }
-
-    .modal {
-      display: none; position: fixed; z-index: 1000;
-      left: 0; top: 0; width: 100%; height: 100%;
-      overflow: auto; background-color: rgba(6, 20, 27, 0.95);
-      padding: 20px; box-sizing: border-box;
-      animation: fadeIn 0.3s ease-out;
-    }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .modal-content {
-      margin: auto; display: block; width: 80%;
-      max-width: 800px; border-radius: 10px;
-      animation-name: zoom; animation-duration: 0.4s;
-    }
-    @keyframes zoom { from {transform: scale(0.5); opacity: 0;} to {transform: scale(1); opacity: 1;} }
-    .close {
-      position: absolute; top: 15px; right: 35px;
-      color: #4A5C6A; font-size: 40px; font-weight: bold;
-      cursor: pointer; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    }
-    .close:hover, .close:focus {
-      color: #CCD0CF;
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    @media (max-width: 768px) {
-      .header-content, .card.cert-card-content { flex-direction: column; text-align: center; }
-      .header-text { text-align: center; }
-      header h1 { font-size: 2.2rem; }
-      header p { font-size: 1rem; }
-      nav { flex-wrap: wrap; padding: 1rem 0.5rem; gap: 1rem; }
-      nav a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
-      .cert-cards { grid-template-columns: 1fr; }
-      .cert-card-content { gap: 1.5rem; }
-      .card img.cert-image { order: -1; }
-      .card-info { text-align: center; }
-      .modal-content { width: 95%; }
+    /* Reduce motion if user prefers */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; }
     }
   </style>
 </head>
 <body>
 
+  <!-- PARTICLE CANVAS (floating neon dots + subtle lines) -->
+  <canvas id="particles"></canvas>
+
   <header>
-    <div class="header-content animate-on-load" style="animation-delay: 0.2s;">
-      <img src="certs/photo.jpeg" alt="A photo of Jivithesh" class="profile-photo">
+    <div class="header-content reveal" data-rev>
+      <div class="profile-photo tilt">
+        <img src="certs/photo.jpeg" alt="A photo of Jivithesh" />
+      </div>
       <div class="header-text">
-        <h1>JIVITHESH A S</h1>
+        <h1><span class="name-glow">JIVITHESH A S</span></h1>
         <p>First-Year B.Tech CSE at Karunya University | Aspiring Software Engineer | Skilled in HTML,CSS,PYTHON,MYSQL | Web Development & AI Enthusiast |</p>
       </div>
     </div>
   </header>
 
-  <nav class="animate-on-load" style="animation-delay: 0.4s;">
+  <nav class="reveal" data-rev>
     <a href="#projects">Projects</a>
     <a href="#certifications">Certifications</a>
   </nav>
 
-  <section id="projects" class="animate-on-load" style="animation-delay: 0.6s;">
-    <h2>Projects</h2>
-    <div class="cert-cards">
-
-      <a href="project1.html" class="project-link">
-        <div class="card project-card">
-          <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+One" alt="Project One Thumbnail" class="project-image">
-          <div class="project-content">
-            <h4>Project Title One</h4>
-            <p>A brief but engaging description of the first project, outlining its main features and what problem it solves.</p>
-            <div class="project-tech">
-              <span class="tech-tag">HTML5</span>
-              <span class="tech-tag">CSS3</span>
-              <span class="tech-tag">JavaScript</span>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="project2.html" class="project-link">
-        <div class="card project-card">
-          <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Two" alt="Project Two Thumbnail" class="project-image">
-          <div class="project-content">
-            <h4>Project Title Two</h4>
-            <p>This project uses advanced frameworks to deliver a seamless user experience. Here's a little bit more detail about it.</p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">API</span>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="project3.html" class="project-link">
-        <div class="card project-card">
-          <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Three" alt="Project Three Thumbnail" class="project-image">
-          <div class="project-content">
-            <h4>Project Title Three</h4>
-            <p>An exploration into machine learning and data visualization, creating an interactive and informative web application.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Flask</span>
-              <span class="tech-tag">D3.js</span>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="project4.html" class="project-link">
-        <div class="card project-card">
-          <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Four" alt="Project Four Thumbnail" class="project-image">
-          <div class="project-content">
-            <h4>Project Title Four</h4>
-            <p>A full-stack application with a database, authentication, and a clean, responsive user interface.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Vue.js</span>
-              <span class="tech-tag">Firebase</span>
-              <span class="tech-tag">TailwindCSS</span>
-            </div>
-          </div>
-        </div>
-      </a>
-
-    </div>
-  </section>
-  <section id="certifications" class="animate-on-load" style="animation-delay: 0.8s;">
-    <h2>Certifications</h2>
-
-    <div class="cert-group">
-      <h3>Oracle</h3>
+  <main>
+    <section id="projects" class="reveal" data-rev>
+      <h2><span class="dot"></span> Projects</h2>
       <div class="cert-cards">
-        <div class="card">
-          <div class="cert-card-content">
-            <div class="card-info">
-              <h4>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h4>
-              <p><strong>Issuer:</strong> Oracle</p>
-              <p><strong>Date:</strong> 26 Aug 2025</p>
-              <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=7C4763898FF07E9EDCB96439AABA2F582597771018A612A2EF87A41B742DEE67" target="_blank">View Credential</a>
+
+        <a href="project1.html" class="project-link">
+          <div class="project-card tilt">
+            <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+One" alt="Project One Thumbnail" class="project-image">
+            <div class="project-content">
+              <h4>Project Title One</h4>
+              <p>A brief but engaging description of the first project, outlining its main features and what problem it solves.</p>
+              <div class="project-tech">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
             </div>
-            <img class="cert-image" src="certs/oracle.jpg" alt="Oracle AI Foundations">
+          </div>
+        </a>
+
+        <a href="project2.html" class="project-link">
+          <div class="project-card tilt">
+            <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Two" alt="Project Two Thumbnail" class="project-image">
+            <div class="project-content">
+              <h4>Project Title Two</h4>
+              <p>This project uses advanced frameworks to deliver a seamless user experience. Here's a little bit more detail about it.</p>
+              <div class="project-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">API</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="project3.html" class="project-link">
+          <div class="project-card tilt">
+            <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Three" alt="Project Three Thumbnail" class="project-image">
+            <div class="project-content">
+              <h4>Project Title Three</h4>
+              <p>An exploration into machine learning and data visualization, creating an interactive and informative web application.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">D3.js</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="project4.html" class="project-link">
+          <div class="project-card tilt">
+            <img src="https://placehold.co/600x400/11212D/9BA8AB?text=Project+Four" alt="Project Four Thumbnail" class="project-image">
+            <div class="project-content">
+              <h4>Project Title Four</h4>
+              <p>A full-stack application with a database, authentication, and a clean, responsive user interface.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Vue.js</span>
+                <span class="tech-tag">Firebase</span>
+                <span class="tech-tag">TailwindCSS</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section id="certifications" class="reveal" data-rev>
+      <h2><span class="dot"></span> Certifications</h2>
+
+      <div class="cert-group">
+        <h3>Oracle</h3>
+        <div class="cert-cards">
+          <div class="card">
+            <div class="cert-card-content">
+              <div class="card-info">
+                <h4>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h4>
+                <p><strong>Issuer:</strong> Oracle</p>
+                <p><strong>Date:</strong> 26 Aug 2025</p>
+                <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=7C4763898FF07E9EDCB96439AABA2F582597771018A612A2EF87A41B742DEE67" target="_blank">View Credential</a>
+              </div>
+              <img class="cert-image" src="certs/oracle.jpg" alt="Oracle AI Foundations">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-       
-    
-    <div class="cert-group">
+      <div class="cert-group">
         <h3>Cisco</h3>
         <div class="cert-cards">
             <div class="card">
@@ -433,8 +342,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="cert-group">
+      </div>
+
+      <div class="cert-group">
         <h3>University of Helsinki</h3>
         <div class="cert-cards">
             <div class="card">
@@ -449,85 +359,244 @@
               </div>
             </div>
         </div>
-    </div>
+      </div>
 
-    <div class="cert-group">
-      <h3>Kaggle</h3>
-      <div class="cert-cards">
-        <div class="card">
-          <div class="cert-card-content">
-            <div class="card-info">
-              <h4>Python</h4>
-              <p><strong>Issuer:</strong> Kaggle</p>
-              <p><strong>Date:</strong> 27 Aug 2025</p>
-              <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+      <div class="cert-group">
+        <h3>Kaggle</h3>
+        <div class="cert-cards">
+          <div class="card">
+            <div class="cert-card-content">
+              <div class="card-info">
+                <h4>Python</h4>
+                <p><strong>Issuer:</strong> Kaggle</p>
+                <p><strong>Date:</strong> 27 Aug 2025</p>
+                <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+              </div>
+              <img class="cert-image" src="certs/kaggle-python.png" alt="Kaggle Python">
             </div>
-            <img class="cert-image" src="certs/kaggle-python.png" alt="Kaggle Python">
           </div>
-        </div>
-        <div class="card">
-          <div class="cert-card-content">
-            <div class="card-info">
-              <h4>Intro to Machine Learning</h4>
-              <p><strong>Issuer:</strong> Kaggle</p>
-              <p><strong>Date:</strong> 27 Aug 2025</p>
-              <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+          <div class="card">
+            <div class="cert-card-content">
+              <div class="card-info">
+                <h4>Intro to Machine Learning</h4>
+                <p><strong>Issuer:</strong> Kaggle</p>
+                <p><strong>Date:</strong> 27 Aug 2025</p>
+                <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+              </div>
+              <img class="cert-image" src="certs/kaggle-ml.png" alt="Kaggle ML">
             </div>
-            <img class="cert-image" src="certs/kaggle-ml.png" alt="Kaggle ML">
           </div>
-        </div>
-        <div class="card">
-          <div class="cert-card-content">
-            <div class="card-info">
-              <h4>Intro to Programming</h4>
-              <p><strong>Issuer:</strong> Kaggle</p>
-              <p><strong>Date:</strong> 27 Aug 2025</p>
-              <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+          <div class="card">
+            <div class="cert-card-content">
+              <div class="card-info">
+                <h4>Intro to Programming</h4>
+                <p><strong>Issuer:</strong> Kaggle</p>
+                <p><strong>Date:</strong> 27 Aug 2025</p>
+                <a href="https://www.kaggle.com/learn/certification/jivitheshas/intro-to-programming" target="_blank">View Credential</a>
+              </div>
+              <img class="cert-image" src="certs/kaggle-programming.png" alt="Kaggle Programming">
             </div>
-            <img class="cert-image" src="certs/kaggle-programming.png" alt="Kaggle Programming">
           </div>
         </div>
       </div>
+
+    </section>
+
+    <footer class="reveal" data-rev>
+      <p>© 2025 Jivithesh. All Rights Reserved.</p>
+    </footer>
+  </main>
+
+  <!-- Modal kept same -->
+  <div id="imageModal" class="modal" aria-hidden="true">
+    <span class="close" role="button" aria-label="Close">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Certificate preview">
     </div>
-
-    
-  </section>
-
-  <footer>
-    <p>© 2025 Jivithesh. All Rights Reserved.</p>
-  </footer>
-
-  <div id="imageModal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
   </div>
 
   <script>
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImage");
-    const closeBtn = document.getElementsByClassName("close")[0];
-    const images = document.getElementsByClassName("cert-image");
+    /* ==========================
+       Intersection reveal (stagger)
+       ========================== */
+    const revealEls = document.querySelectorAll('[data-rev], .reveal');
+    const obs = new IntersectionObserver((entries, oi) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          oi.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+    revealEls.forEach(el => obs.observe(el));
 
-    for (let i = 0; i < images.length; i++) {
-      images[i].onclick = function() {
-        modal.style.display = "block";
-        modalImg.src = this.src;
+    /* ==========================
+       Tilt effect for .tilt
+       ========================== */
+    function addTilt(selector, strength=12){
+      document.querySelectorAll(selector).forEach(el=>{
+        el.addEventListener('mousemove', e=>{
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left, y = e.clientY - r.top;
+          const cx = r.width/2, cy = r.height/2;
+          const dx = (x - cx) / cx, dy = (y - cy) / cy;
+          const rx = -dy * strength, ry = dx * strength;
+          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+        });
+        el.addEventListener('mouseleave', ()=> el.style.transform = 'none');
+      });
+    }
+    addTilt('.tilt', 8);
+
+    /* ==========================
+       Image modal logic (kept same behavior)
+       ========================== */
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('#imageModal .close');
+    const certImgs = document.querySelectorAll('.cert-image');
+
+    certImgs.forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.src;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+      });
+      img.addEventListener('keydown', e => { if(e.key === 'Enter') img.click(); });
+    });
+
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      modalImg.src = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+    /* ==========================
+       Particle system (canvas)
+       ========================== */
+    (function(){
+      const canvas = document.getElementById('particles');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = innerWidth;
+      let H = canvas.height = innerHeight;
+      const particles = [];
+      const count = Math.max(24, Math.min(90, Math.floor((W*H)/90000))); // scale with screen
+
+      function rand(min,max){ return Math.random()*(max-min)+min; }
+
+      class P {
+        constructor(){
+          this.reset();
+        }
+        reset(){
+          this.x = rand(0,W);
+          this.y = rand(0,H);
+          this.r = rand(0.8, 3.6);
+          this.vx = rand(-0.3,0.6);
+          this.vy = rand(-0.1,0.4);
+          // color near purple/cyan palette
+          const t = Math.random();
+          if(t < 0.55) {
+            this.color = `rgba(140,75,255,${rand(0.08,0.28)})`;
+          } else {
+            this.color = `rgba(110,240,255,${rand(0.06,0.18)})`;
+          }
+          this.angle = rand(0,Math.PI*2);
+          this.amp = rand(6,28);
+        }
+        update(){
+          this.x += this.vx + Math.sin(this.angle)*0.12;
+          this.y += this.vy + Math.cos(this.angle)*0.06;
+          this.angle += 0.002;
+          if(this.x < -50 || this.x > W+50 || this.y < -50 || this.y > H+50) this.reset();
+        }
+        draw(){
+          // soft glow
+          const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r*8);
+          g.addColorStop(0, this.color);
+          g.addColorStop(0.6, this.color.replace('1)','0.12)'.replace('0.','0.')) ;
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.beginPath();
+          ctx.fillStyle = g;
+          ctx.arc(this.x, this.y, this.r*6, 0, Math.PI*2);
+          ctx.fill();
+          // tiny core
+          ctx.beginPath();
+          ctx.fillStyle = this.color;
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+          ctx.fill();
+        }
+      }
+
+      function init(){
+        particles.length = 0;
+        for(let i=0;i<count;i++) particles.push(new P());
+      }
+
+      let raf;
+      function loop(){
+        ctx.clearRect(0,0,W,H);
+        for(let i=0;i<particles.length;i++){
+          particles[i].update();
+          particles[i].draw();
+        }
+        // optional connecting lines (very subtle)
+        for(let i=0;i<particles.length;i++){
+          for(let j=i+1;j<particles.length;j++){
+            const a = particles[i], b = particles[j];
+            const dx = a.x-b.x, dy = a.y-b.y;
+            const d = Math.sqrt(dx*dx+dy*dy);
+            if(d < 140){
+              ctx.beginPath();
+              ctx.strokeStyle = (d<80) ? 'rgba(140,75,255,0.06)' : 'rgba(110,240,255,0.02)';
+              ctx.lineWidth = 1;
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.stroke();
+            }
+          }
+        }
+        raf = requestAnimationFrame(loop);
+      }
+
+      function resize(){
+        W = canvas.width = innerWidth;
+        H = canvas.height = innerHeight;
+        init();
+      }
+      addEventListener('resize', resize);
+      init();
+      loop();
+    })();
+
+    /* ==========================
+       keyboard focus outlines for accessibility
+       ========================== */
+    function handleFirstTab(e){
+      if(e.key === 'Tab'){
+        document.documentElement.classList.add('show-focus');
+        window.removeEventListener('keydown', handleFirstTab);
       }
     }
+    window.addEventListener('keydown', handleFirstTab);
+    const st = document.createElement('style');
+    st.innerHTML = `.show-focus a:focus, .show-focus button:focus, .show-focus .cert-image:focus { outline: 2px solid rgba(140,75,255,0.9); outline-offset: 3px; border-radius:6px; }`;
+    document.head.appendChild(st);
 
-    function closeModal() {
-      modal.style.display = "none";
-      document.body.style.overflow = 'auto';
-    }
-
-    closeBtn.onclick = closeModal;
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        closeModal();
-      }
-    }
+    /* ==========================
+       small stagger initial reveal
+       ========================== */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const items = document.querySelectorAll('[data-rev]');
+      items.forEach((el, idx) => setTimeout(()=> el.classList.add('show'), idx*120));
+    });
   </script>
-
 </body>
 </html>
+
