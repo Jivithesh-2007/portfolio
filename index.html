@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jivithesh A S | Portfolio</title>
+<title>Jivithesh A S - Portfolio</title>
 
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 :root {
     --primary: #0a0a14;
     --secondary: #111827;
+    --tertiary: #1f2937;
     --accent: #a855f7;
     --accent-light: #d8b4fe;
     --text: #f3f4f6;
     --text-muted: #9ca3af;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 html { scroll-behavior: smooth; }
@@ -27,16 +24,17 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: var(--text);
+    line-height: 1.6;
 }
 
-/* NAVBAR */
+/* ---------- NAV ---------- */
 nav {
     position: fixed;
-    width: 100%;
     top: 0;
+    width: 100%;
     background: rgba(10,10,20,0.98);
     padding: 1rem 2rem;
-    border-bottom: 1px solid rgba(168,85,247,0.3);
+    border-bottom: 1px solid rgba(168,85,247,0.2);
     z-index: 1000;
 }
 
@@ -48,17 +46,17 @@ nav {
 }
 
 .nav-logo {
-    font-weight: bold;
     font-size: 1.5rem;
+    font-weight: bold;
     background: linear-gradient(135deg, var(--accent), var(--accent-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
+    list-style: none;
     display: flex;
     gap: 2rem;
-    list-style: none;
 }
 
 .nav-links a {
@@ -66,22 +64,20 @@ nav {
     text-decoration: none;
 }
 
-.nav-links a:hover {
-    color: var(--accent);
-}
+.nav-links a:hover { color: var(--accent); }
 
-/* HERO */
+/* ---------- HERO ---------- */
 .hero {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: 5rem;
+    padding-top: 4rem;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
     background: linear-gradient(135deg, var(--accent-light), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -89,21 +85,10 @@ nav {
 
 .hero p {
     color: var(--text-muted);
-    margin: 1rem auto 2rem;
-    max-width: 600px;
+    margin-top: 1rem;
 }
 
-/* 🔥 HERO PHOTO (OPTIONAL BUT RECOMMENDED) */
-.hero-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid var(--accent);
-    object-fit: cover;
-    margin-bottom: 1rem;
-}
-
-/* SECTIONS */
+/* ---------- SECTIONS ---------- */
 section {
     padding: 5rem 2rem;
     max-width: 1200px;
@@ -116,7 +101,7 @@ section {
     margin-bottom: 3rem;
 }
 
-/* ABOUT */
+/* ---------- ABOUT ---------- */
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -127,63 +112,55 @@ section {
 .about-text p {
     color: var(--text-muted);
     margin-bottom: 1rem;
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
-/* ✅ PHOTO GOES HERE */
+/* 📸 ADD YOUR PHOTO HERE */
 .about-image {
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid var(--accent);
+    width: 280px;
+    height: 280px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
     box-shadow: 0 8px 40px rgba(168,85,247,0.4);
     margin: auto;
+    overflow: hidden;
 }
 
+/* If you add photo:
 .about-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+*/
 
-/* EXPERIENCE */
+/* ---------- EXPERIENCE ---------- */
 .experience-card {
     background: rgba(168,85,247,0.08);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 15px;
-    border: 1px solid rgba(168,85,247,0.3);
+    border: 1.5px solid rgba(168,85,247,0.25);
     margin-bottom: 2rem;
 }
 
-.exp-title {
-    font-size: 1.3rem;
-    color: var(--accent-light);
-}
-
-.exp-duration {
-    color: var(--accent);
-    font-size: 0.9rem;
-}
-
-/* PROJECTS */
+/* ---------- PROJECTS ---------- */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
 }
 
 .project-card {
     background: rgba(168,85,247,0.08);
-    padding: 2rem;
     border-radius: 15px;
-    border: 1px solid rgba(168,85,247,0.3);
+    padding: 2.5rem;
+    border: 1.5px solid rgba(168,85,247,0.25);
 }
 
-/* SKILLS – FIXED ALIGNMENT */
+/* ---------- SKILLS (ALIGNED FIX) ---------- */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2.5rem;
     align-items: stretch;
 }
@@ -192,13 +169,15 @@ section {
     background: rgba(168,85,247,0.08);
     padding: 2rem;
     border-radius: 15px;
-    border: 1px solid rgba(168,85,247,0.3);
+    border: 1.5px solid rgba(168,85,247,0.25);
     height: 100%;
 }
 
 .skill-category h3 {
-    color: var(--accent-light);
     margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .skill-item {
@@ -206,25 +185,25 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(168,85,247,0.2);
+    border-bottom: 1px solid rgba(168,85,247,0.15);
 }
 
-.skill-name {
-    font-weight: 600;
+.skill-item:last-child {
+    border-bottom: none;
 }
 
 .skill-level {
-    font-size: 0.85rem;
-    background: rgba(168,85,247,0.25);
+    background: rgba(168,85,247,0.2);
     padding: 0.3rem 0.8rem;
     border-radius: 12px;
+    font-size: 0.85rem;
 }
 
-/* CONTACT */
+/* ---------- CONTACT ---------- */
 .contact-links {
     display: flex;
-    justify-content: center;
     gap: 2rem;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -236,25 +215,27 @@ section {
     border-radius: 12px;
 }
 
+/* ---------- FOOTER ---------- */
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem;
     color: var(--text-muted);
 }
 
-@media(max-width:768px){
+@media (max-width: 768px) {
     .about-content { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
 <div class="nav-container">
 <div class="nav-logo">JAS</div>
 <ul class="nav-links">
+<li><a href="#home">Home</a></li>
 <li><a href="#about">About</a></li>
 <li><a href="#experience">Experience</a></li>
 <li><a href="#projects">Projects</a></li>
@@ -264,99 +245,53 @@ footer {
 </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<section id="home" class="hero">
 <div>
-<!-- 🔥 OPTIONAL HERO PHOTO -->
-<img src="profile.jpg" class="hero-avatar" alt="Jivithesh A S">
-
 <h1>Jivithesh A S</h1>
 <p>Full Stack Developer | CSE Student @ Karunya Institute</p>
 </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
 <h2 class="section-title">About Me</h2>
 <div class="about-content">
 <div class="about-text">
-<p>I am a Computer Science and Engineering student passionate about full stack development and software engineering.</p>
-<p>Currently working as a Full Stack Developer Intern at Codec Technologies.</p>
-<p>Focused on discipline, consistency, and continuous improvement.</p>
+<p>I am a CSE undergraduate passionate about full stack development.</p>
+<p>Currently a Full Stack Developer Intern at Codec Technologies.</p>
+<p>Focused on discipline, consistency, and growth.</p>
 </div>
-
-<!-- ✅ MAIN PROFILE PHOTO LOCATION -->
 <div class="about-image">
-<img src="profile.jpg" alt="Jivithesh A S">
+<img src="profile.jpg">
 </div>
 </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-<h2 class="section-title">Experience</h2>
-
-<div class="experience-card">
-<div class="exp-title">Full Stack Developer Intern</div>
-<div class="exp-duration">Codec Technologies | 3 Months</div>
-</div>
-
-<div class="experience-card">
-<div class="exp-title">Internship Trainee</div>
-<div class="exp-duration">CODTECH IT SOLUTIONS | 2 Months</div>
-</div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-<h2 class="section-title">Projects</h2>
-<div class="projects-grid">
-<div class="project-card">ClassForge</div>
-<div class="project-card">Amazon Clone</div>
-<div class="project-card">YouTube Clone</div>
-<div class="project-card">Shopping Cart</div>
-<div class="project-card">Quiz App</div>
-<div class="project-card">Chatbot</div>
-</div>
-</section>
-
-<!-- SKILLS -->
 <section id="skills">
 <h2 class="section-title">Skills</h2>
 <div class="skills-grid">
 
 <div class="skill-category">
 <h3>Programming</h3>
-<div class="skill-item"><span class="skill-name">C</span><span class="skill-level">Moderate</span></div>
-<div class="skill-item"><span class="skill-name">C++</span><span class="skill-level">Moderate</span></div>
-<div class="skill-item"><span class="skill-name">Python</span><span class="skill-level">Moderate</span></div>
-<div class="skill-item"><span class="skill-name">JavaScript</span><span class="skill-level">Moderate</span></div>
+<div class="skill-item"><span>C</span><span class="skill-level">Moderate</span></div>
+<div class="skill-item"><span>C++</span><span class="skill-level">Moderate</span></div>
+<div class="skill-item"><span>Python</span><span class="skill-level">Moderate</span></div>
+<div class="skill-item"><span>JavaScript</span><span class="skill-level">Moderate</span></div>
 </div>
 
 <div class="skill-category">
-<h3>Web Development</h3>
-<div class="skill-item"><span class="skill-name">HTML</span><span class="skill-level">Comfortable</span></div>
-<div class="skill-item"><span class="skill-name">CSS</span><span class="skill-level">Comfortable</span></div>
-<div class="skill-item"><span class="skill-name">React</span><span class="skill-level">Beginner</span></div>
+<h3>Web</h3>
+<div class="skill-item"><span>HTML</span><span class="skill-level">Comfortable</span></div>
+<div class="skill-item"><span>CSS</span><span class="skill-level">Comfortable</span></div>
+<div class="skill-item"><span>React</span><span class="skill-level">Beginner</span></div>
 </div>
 
 <div class="skill-category">
 <h3>Backend & Tools</h3>
-<div class="skill-item"><span class="skill-name">Node.js</span><span class="skill-level">Beginner</span></div>
-<div class="skill-item"><span class="skill-name">MongoDB</span><span class="skill-level">Comfortable</span></div>
-<div class="skill-item"><span class="skill-name">Git & GitHub</span><span class="skill-level">Moderate</span></div>
+<div class="skill-item"><span>Node.js</span><span class="skill-level">Beginner</span></div>
+<div class="skill-item"><span>MongoDB</span><span class="skill-level">Comfortable</span></div>
+<div class="skill-item"><span>Git & GitHub</span><span class="skill-level">Moderate</span></div>
 </div>
 
-</div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-<h2 class="section-title">Get In Touch</h2>
-<div class="contact-links">
-<a class="contact-link" href="https://linkedin.com" target="_blank">LinkedIn</a>
-<a class="contact-link" href="https://github.com/Jivithesh-2007" target="_blank">GitHub</a>
-<a class="contact-link" href="mailto:jivithesh448@gmail.com">Email</a>
 </div>
 </section>
 
@@ -366,3 +301,4 @@ footer {
 
 </body>
 </html>
+
